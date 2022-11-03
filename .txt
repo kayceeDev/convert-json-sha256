@@ -1,0 +1,4 @@
+iterate over each rows of the csv.
+for each row, convert it to a chip json
+convert the json back to a sha256
+Append the generated sha256 to the row
