@@ -6,7 +6,7 @@ const { convertStringTolist, hash } = require("./utils");
 const myArgs = process.argv.slice(2);
 
 const path = myArgs[0] ? `./csv/${myArgs[0]}.csv` : "./csv/hngcsv.csv"
-const teamName = myArgs[1]? myArgs[1] : "filename.output"
+const teamName = myArgs[1]? myArgs[1] : "filename"
 
 
 
@@ -52,7 +52,7 @@ const createShaCsv = (filename,teamName) => {
     .on("end", function () {
       const json2csvParser = new Parser(Object.keys(dataArray[0]));
       const result = json2csvParser.parse(dataArray);
-      fs.writeFileSync(`./csv/${teamName}.csv`, result);
+      fs.writeFileSync(`./csv/${teamName}.output.csv`, result);
     });
 };
 
