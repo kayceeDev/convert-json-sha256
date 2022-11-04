@@ -3,7 +3,24 @@ const fs = require("fs");
 const { Parser } = require("json2csv");
 const { convertStringTolist, hash } = require("./utils");
 
-const createShaCsv = (filename) => {
+const myArgs = process.argv.slice(2);
+
+const path = myArgs[0] ? `./csv/${myArgs[0]}.csv` : "./csv/hngcsv.csv"
+const teamName = myArgs[1]? myArgs[1] : "filename.output"
+
+
+
+
+fs.access(path, fs.F_OK, (err) => {
+  if (err) {
+    console.error(err)
+    return
+  }
+  //file exists
+  createShaCsv(path,teamName);
+})
+
+const createShaCsv = (filename,teamName) => {
   const dataArray = [];
   fs.createReadStream(filename)
     .pipe(csv())
@@ -35,8 +52,8 @@ const createShaCsv = (filename) => {
     .on("end", function () {
       const json2csvParser = new Parser(Object.keys(dataArray[0]));
       const result = json2csvParser.parse(dataArray);
-      fs.writeFileSync("./csv/filename.csv", result);
+      fs.writeFileSync(`./csv/${teamName}.csv`, result);
     });
 };
 
-createShaCsv("./csv/hngcsv.csv");
+
